@@ -1,0 +1,7 @@
+{
+  "name": "LineaTemporal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
