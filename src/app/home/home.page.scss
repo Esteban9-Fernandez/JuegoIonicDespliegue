@@ -75,3 +75,17 @@ ion-card.disabled {
   pointer-events: none;
   opacity: 0.5;
 }
+
+ion-card {
+  width: 400px;
+  height: auto; /* Cambiado a auto para ajustar al contenido */
+  margin: 10px 5px;
+  overflow: auto;
+  transition: height 0.3s ease;
+}
+
+ion-card-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

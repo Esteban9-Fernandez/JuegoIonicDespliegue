@@ -5,6 +5,8 @@ import { IonicModule } from "@ionic/angular";
 import { CommonModule } from "@angular/common";
 import { PopupComponent } from '../popup/popup.component';
 import { PopupAciertoComponent } from '../popup-acierto/popup-acierto.component';
+import { NavController } from '@ionic/angular';
+import { Location } from '@angular/common'; // Import Location
 
 @Component({
   selector: 'app-home',
@@ -21,12 +23,12 @@ export class HomePage implements OnInit {
   allCorrect: boolean = false;
   attemptCount: number = 0; // Add attempt counter
 
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController, private navCtrl: NavController, private location: Location) {}
 
   ngOnInit() {
     this.generateRandomButtons();
     this.correctOrder = Object.keys(this.datos);
-    this.presentModal(); // Ensure the modal is presented on page initialization
+    this.presentModal();
   }
 
   generateRandomButtons() {
@@ -54,13 +56,15 @@ export class HomePage implements OnInit {
     const buttonIndex = this.clickedOrder.indexOf(button);
     if (buttonIndex > -1) {
       this.clickedOrder.splice(buttonIndex, 1);
+      this.datos[button].subtitle = '';
     } else {
       this.clickedOrder.push(button);
+      this.datos[button].subtitle = `${this.clickedOrder.length}`;
     }
   }
 
   async checkOrder() {
-    this.attemptCount++; // Increment attempt counter
+    this.attemptCount++;
     this.errorMessage = '';
     for (let i = 0; i < this.correctOrder.length; i++) {
       if (this.clickedOrder[i] !== this.correctOrder[i]) {
@@ -78,5 +82,8 @@ export class HomePage implements OnInit {
     this.clickedOrder = [];
   }
 
-
+  restartApp() {
+    this.location.go(this.location.path());
+    window.location.reload();
+  }
 }
